@@ -1,0 +1,1 @@
+const e=(e,t=document)=>t.querySelector(e),t=(e,t=document)=>[...t.querySelectorAll(e)],o=(e,t=document)=>{const o=(new XPathEvaluator).createExpression(e).evaluate(t,XPathResult.ORDERED_NODE_SNAPSHOT_TYPE),n=[];for(let e=0,{snapshotLength:t}=o;e<t;e++)n.push(o.snapshotItem(e));return n};export{e as $,t as $$,o as $x};
