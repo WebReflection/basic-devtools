@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TreeWalker vs $x Benchmark</title>
+  <script type="module">
+  import {$x} from '../es.js';
+
+  const times = 0xFFFF;
+
+  const tests = [
+    ['$x', () => $x('.//comment()[. = "👻"]')],
+    ['TreeWalker', () => {
+      const tw = document.createTreeWalker(
+        document,
+        NodeFilter.SHOW_COMMENT,
+        comment => comment.data === '👻' ?
+          NodeFilter.FILTER_ACCEPT :
+          NodeFilter.FILTER_REJECT
+      );
+      const nodes = [];
+      let currentNode;
+      while ((currentNode = tw.nextNode()))
+        nodes.push(currentNode);
+      return nodes;
+    }]
+  ];
+
+  setTimeout(
+    function test() {
+      const [name, utility] = tests.shift();
+      document.body.innerHTML = `<ul>${
+        Array.from(
+          {length: times}, (_, i) =>
+            `<li class="element-${i}">Content <!--👻--> ${i * Math.random()}</li>`
+        ).join('')
+      }</ul>`;
+      console.log(document.body.offsetHeight);
+      setTimeout(() => {
+        console.time(name + ' cold');
+        if (utility().length !== times)
+          throw new Error('unexpected result');
+        console.timeEnd(name + ' cold');
+        setTimeout(() => {
+          console.time(name + ' hot');
+          if (utility().length !== times)
+            throw new Error('unexpected result');
+          console.timeEnd(name + ' hot');
+          if (tests.length)
+            setTimeout(test, 100);
+          else
+            document.body.textContent = 'Check the console ✅';
+        }, 100);
+      }, 100);
+    },
+    100
+  );
+  </script>
+</head>
+<body></body>
+</html>
