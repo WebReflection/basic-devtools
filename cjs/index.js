@@ -1,12 +1,11 @@
 'use strict';
 /**
- * Given a CSS selector, returns the first matching node.
+ * Given a CSS selector, returns the first matching node, if any.
  * @param {string} css the CSS selector to query
  * @param {Document | DocumentFragment | Element} [root] the optional parent node to query
  * @returns {Element?} the found element, if any
  */
 const $ = (css, root = document) => root.querySelector(css);
-exports.$ = $;
 
 /**
  * Given a CSS selector, returns a list of all matching nodes.
@@ -15,7 +14,6 @@ exports.$ = $;
  * @returns {Element[]} a list of found nodes
  */
 const $$ = (css, root = document) => [...root.querySelectorAll(css)];
-exports.$$ = $$;
 
 /**
  * Given a XPath selector, returns a list of all matching nodes.
@@ -31,4 +29,7 @@ const $x = (path, root = document) => {
     result.push(xpath.snapshotItem(i));
   return result;
 };
+
+exports.$ = $;
+exports.$$ = $$;
 exports.$x = $x;

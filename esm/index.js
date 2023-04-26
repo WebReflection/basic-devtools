@@ -1,10 +1,10 @@
 /**
- * Given a CSS selector, returns the first matching node.
+ * Given a CSS selector, returns the first matching node, if any.
  * @param {string} css the CSS selector to query
  * @param {Document | DocumentFragment | Element} [root] the optional parent node to query
  * @returns {Element?} the found element, if any
  */
-export const $ = (css, root = document) => root.querySelector(css);
+const $ = (css, root = document) => root.querySelector(css);
 
 /**
  * Given a CSS selector, returns a list of all matching nodes.
@@ -12,7 +12,7 @@ export const $ = (css, root = document) => root.querySelector(css);
  * @param {Document | DocumentFragment | Element} [root] the optional parent node to query
  * @returns {Element[]} a list of found nodes
  */
-export const $$ = (css, root = document) => [...root.querySelectorAll(css)];
+const $$ = (css, root = document) => [...root.querySelectorAll(css)];
 
 /**
  * Given a XPath selector, returns a list of all matching nodes.
@@ -20,7 +20,7 @@ export const $$ = (css, root = document) => [...root.querySelectorAll(css)];
  * @param {Document | DocumentFragment | Element} [root] the optional parent node to query
  * @returns {Node[]} a list of found nodes (elements, attributes, text, comments)
  */
-export const $x = (path, root = document) => {
+const $x = (path, root = document) => {
   const expression = (new XPathEvaluator).createExpression(path);
   const xpath = expression.evaluate(root, XPathResult.ORDERED_NODE_SNAPSHOT_TYPE);
   const result = [];
@@ -28,3 +28,5 @@ export const $x = (path, root = document) => {
     result.push(xpath.snapshotItem(i));
   return result;
 };
+
+export {$, $$, $x};
