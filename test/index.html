@@ -6,7 +6,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TreeWalker vs $x Benchmark</title>
   <script type="module">
-  import {$x} from '../es.js';
+  import {$, $$, $x} from '../es.js';
+
+  console.assert($('nope') === null, '$("nope")');
+  console.assert($('body') === document.body, '$("body")');
+  console.assert($$('body').length === 1, '$$("body").length');
+  console.assert($$('body')[0] === document.body, '$$("body")[0]');
+  console.assert($x('//body').length === 1, '$x("//body").length');
+  console.assert($x('//body')[0] === document.body, '$x("//body")[0]');
+  console.assert($('*', document.body) === document.body.firstElementChild, '$("*", document.body)');
+  console.assert($$('*', document.body).length === 1, '$$("*", document.body).length');
+  console.assert($$('*', document.body)[0] === document.body.firstElementChild, '$$("*", document.body)[0]');
+  console.assert($x('.//*', document.body).length === 1, '$x(".//*", document.body).length');
+  console.assert($x('.//*', document.body)[0] === document.body.firstElementChild, '$x(".//*", document.body)[0]');
 
   const times = 0xFFFF;
 
@@ -59,5 +71,5 @@
   );
   </script>
 </head>
-<body></body>
+<body><div>testing</div></body>
 </html>

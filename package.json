@@ -4,10 +4,12 @@
   "description": "Exports `$`, `$$`, and `$x` utilities as described in Chrome Console Utilities API reference",
   "main": "./cjs/index.js",
   "scripts": {
-    "build": "npm run cjs && npm run rollup:es && npm run rollup:index && npm run tsc",
+    "build": "npm run cjs && npm run rollup:es && npm run rollup:index && npm run tsc && c8 node test/cover.cjs && npm run size",
     "cjs": "ascjs --no-default esm cjs",
+    "coverage": "mkdir -p ./coverage/tmp; c8 report --reporter=text-lcov > ./coverage/lcov.info",
     "rollup:es": "rollup --config rollup/es.config.js",
     "rollup:index": "rollup --config rollup/index.config.js",
+    "size": "cat es.js | brotli | wc -c",
     "tsc": "tsc -p ."
   },
   "keywords": [
@@ -23,6 +25,7 @@
     "@rollup/plugin-node-resolve": "^15.0.2",
     "@rollup/plugin-terser": "^0.4.1",
     "ascjs": "^5.0.1",
+    "c8": "^7.13.0",
     "rollup": "^3.21.0",
     "typescript": "^5.0.4"
   },

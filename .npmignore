@@ -1,9 +1,7 @@
 .DS_Store
-.nyc_output
-.eslintrc.json
-.travis.yml
 coverage/
 node_modules/
 rollup/
 test/
 tsconfig.json
+package-lock.json
