@@ -1,6 +1,6 @@
 {
   "name": "basic-devtools",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Exports `$`, `$$`, and `$x` utilities as described in Chrome Console Utilities API reference",
   "main": "./cjs/index.js",
   "scripts": {
